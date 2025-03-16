@@ -33,6 +33,9 @@ noise_offset = 0 # noise offset | 在训练中添加噪声偏移来改良生成�
 keep_tokens = 0 # keep heading N tokens when shuffling caption tokens | 在随机打乱 tokens 时，保留前 N 个不变。
 min_snr_gamma = 0 # minimum signal-to-noise ratio (SNR) value for gamma-ray | 伽马射线事件的最小信噪比（SNR）值  默认为 0
 
+#change
+beta_class_balancing = 0 # minimum signal-to-noise ratio (SNR) value for gamma-ray | 伽马射线事件的最小信噪比（SNR）值  默认为 0
+
 # Learning rate | 学习率
 lr = "1e-4" # learning rate | 学习率，在分别设置下方 U-Net 和 文本编码器 的学习率时，该参数失效
 unet_lr = "1e-4" # U-Net learning rate | U-Net 学习率
@@ -96,7 +99,7 @@ class LoraTraininginComfy:
             "ckpt_name": (folder_paths.get_filename_list("checkpoints"), ),
             #"theseed": ("INT", {"default": 0, "min": 0, "max": 0xffffffffffffffff}),
             "data_path": ("STRING", {"default": "Insert path of image folders"}),
-			"batch_size": ("INT", {"default": 1, "min":1}),
+            "batch_size": ("INT", {"default": 1, "min":1}),
             "max_train_epoches": ("INT", {"default":10, "min":1}),
             "save_every_n_epochs": ("INT", {"default":10, "min":1}),
             #"lr": ("INT": {"default":"1e-4"}),
@@ -104,8 +107,16 @@ class LoraTraininginComfy:
             "output_name": ("STRING", {"default":'Desired name for LoRA.'}),
             "clip_skip": ("INT", {"default":2, "min":1}),
             "output_dir": ("STRING", {"default":'models/loras'}),
+            #change
+            "beta_class_balancing": ("FLOAT", {"default":0}),
+            # "beta_class_balancing": ("ENUM", {
+            #     "options": [0, 0.9, 0.99, 0.999, 0.9999],
+            #     "default": 0
+            # }),       
             },
         }
+
+
 
     RETURN_TYPES = ()
     RETURN_NAMES = ()
@@ -116,8 +127,8 @@ class LoraTraininginComfy:
 
     CATEGORY = "LJRE/LORA"
 
-    
-    def loratraining(self, ckpt_name, data_path, batch_size, max_train_epoches, save_every_n_epochs, output_name, clip_skip, output_dir):
+    #change
+    def loratraining(self, ckpt_name, data_path, batch_size, max_train_epoches, save_every_n_epochs, output_name, clip_skip, output_dir, beta_class_balancing):
         #free memory first of all
         loadedmodels=model_management.current_loaded_models
         unloaded_model = False
@@ -207,6 +218,10 @@ class LoraTraininginComfy:
                 ext_args.append(f"--log_tracker_name={log_tracker_name}")
         else:
             ext_args.append("--log_with=tensorboard")
+
+        #change
+        if beta_class_balancing != 0:
+            ext_args.append(f"--beta_class_balancing={beta_class_balancing}")
 
         launchargs=' '.join(launch_args)
         extargs=' '.join(ext_args)

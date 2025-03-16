@@ -9,6 +9,8 @@ import time
 import json
 from multiprocessing import Value
 import toml
+#change
+from collections import Counter
 
 from tqdm import tqdm
 import torch
@@ -37,6 +39,7 @@ from library.config_util import (
 )
 import library.huggingface_util as huggingface_util
 import library.custom_train_functions as custom_train_functions
+#change
 from library.custom_train_functions import (
     apply_snr_weight,
     get_weighted_text_embeddings,
@@ -44,6 +47,7 @@ from library.custom_train_functions import (
     scale_v_prediction_loss_like_noise_prediction,
     add_v_prediction_like_loss,
     apply_debiased_estimation,
+    apply_class_balanced_loss,
 )
 
 
@@ -130,6 +134,30 @@ class NetworkTrainer:
     def sample_images(self, accelerator, args, epoch, global_step, device, vae, tokenizer, text_encoder, unet):
         train_util.sample_images(accelerator, args, epoch, global_step, device, vae, tokenizer, text_encoder, unet)
 
+    #change
+    def calculate_class_counts_from_dataset(self, args):
+        """
+        train_folder_path 내의 모든 하위 폴더를 순회하며 클래스별 샘플 수를 계산합니다.
+
+        Args:
+            train_folder_path (str): 데이터셋 최상위 폴더 경로
+
+        Returns:
+            class_counts (dict): 각 클래스의 샘플 수 딕셔너리
+        """
+        class_counts = Counter()
+
+        # train_folder_path 내 모든 하위 폴더 순회
+        for root, dirs, files in os.walk(args.train_data_dir):
+            for file_name in files:
+                # 이미지 파일만 처리 (.png 확장자)
+                if file_name.endswith('.png'):
+                    # 파일 이름에서 클래스 이름 추출 (예: 'ring_001.png' -> 'ring')
+                    class_name = file_name.split('_')[0]
+                    class_counts[class_name] += 1
+
+        return class_counts
+
     def train(self, args):
         session_id = random.randint(0, 2**32)
         training_started_at = time.time()
@@ -214,6 +242,10 @@ class NetworkTrainer:
             ), "when caching latents, either color_aug or random_crop cannot be used / latentをキャッシュするときはcolor_augとrandom_cropは使えません"
 
         self.assert_extra_args(args, train_dataset_group)
+
+        if args.beta_class_balancing:
+            class_counts = self.calculate_class_counts_from_dataset(args)
+            print(class_counts)          
 
         # acceleratorを準備する
         print("preparing accelerator")
@@ -487,6 +519,7 @@ class NetworkTrainer:
         accelerator.print(f"  gradient accumulation steps / 勾配を合計するステップ数 = {args.gradient_accumulation_steps}")
         accelerator.print(f"  total optimization steps / 学習ステップ数: {args.max_train_steps}")
 
+        #change
         # TODO refactor metadata creation and move to util
         metadata = {
             "ss_session_id": session_id,  # random integer indicating which group of epochs the model came from
@@ -535,6 +568,7 @@ class NetworkTrainer:
             "ss_scale_weight_norms": args.scale_weight_norms,
             "ss_ip_noise_gamma": args.ip_noise_gamma,
             "ss_debiased_estimation": bool(args.debiased_estimation_loss),
+            "ss_beta_class_balancing": args.beta_class_balancing,
         }
 
         if use_user_config:
@@ -819,6 +853,18 @@ class NetworkTrainer:
                         loss = add_v_prediction_like_loss(loss, timesteps, noise_scheduler, args.v_pred_like_loss)
                     if args.debiased_estimation_loss:
                         loss = apply_debiased_estimation(loss, timesteps, noise_scheduler)
+
+                    #change
+                    for key, value in batch.items():
+                      print(f"Key: {key}")
+                      print(f"Value: {value}")
+                      print(f"Type: {type(value)}")
+                      if hasattr(value, "shape"):
+                          print(f"Shape: {value.shape}")
+                    accelerator.print("loss_check:", loss)
+                    if args.beta_class_balancing:
+                        loss = apply_class_balanced_loss(loss, args.beta_class_balancing, class_counts)
+                        accelerator.print("loss_check_after_class_balancing:", loss)
 
                     loss = loss.mean()  # 平均なのでbatch_sizeで割る必要なし
 

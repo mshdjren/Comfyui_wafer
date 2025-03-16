@@ -93,9 +93,43 @@ def apply_debiased_estimation(loss, timesteps, noise_scheduler):
     loss = weight * loss
     return loss
 
+
+#change
+def apply_class_balanced_loss(loss, beta, class_counts):
+    """
+    Class-Balanced Loss를 계산합니다.
+
+    Args:
+        pred (Tensor): 모델 출력값
+        target (Tensor): 실제 정답값
+        class_counts (dict): 각 클래스의 샘플 수 딕셔너리
+        beta (float): 가중치 조정 하이퍼파라미터
+
+    Returns:
+        loss (Tensor): 계산된 손실 값
+    """
+    # Effective Number 계산
+    effective_num = torch.tensor([(1 - beta**count) / (1 - beta) for count in class_counts.values()])
+    weights = 1 / effective_num
+    weights = weights / weights.sum() * len(class_counts)  # Normalize weights
+
+    print(class_counts)
+    print(effective_num)
+    print(class_counts)
+    print(loss)
+
+    # # 각 샘플의 클래스별 가중치 적용
+    # class_indices = target.argmax(dim=1)  # 각 샘플의 클래스 인덱스
+    # sample_weights = weights[class_indices]  # 해당 클래스의 가중치
+
+    # # MSE 손실 계산 및 가중치 적용
+    # mse_loss = F.mse_loss(pred, target, reduction='none')
+    # weighted_loss = loss * sample_weights.unsqueeze(-1)
+
+    # return weighted_loss.mean()
+
+  
 # TODO train_utilと分散しているのでどちらかに寄せる
-
-
 def add_custom_train_arguments(parser: argparse.ArgumentParser, support_weighted_captions: bool = True):
     parser.add_argument(
         "--min_snr_gamma",
@@ -119,6 +153,15 @@ def add_custom_train_arguments(parser: argparse.ArgumentParser, support_weighted
         action="store_true",
         help="debiased estimation loss / debiased estimation loss",
     )
+
+    #change
+    parser.add_argument(
+        "--beta_class_balancing",
+        type=float,
+        default=None,
+        help="beta for class-balancing loss to calculate effective number. Lower numbers have stronger effect. 0.9 is recommended by paper.",
+    )
+
     if support_weighted_captions:
         parser.add_argument(
             "--weighted_captions",

@@ -571,9 +571,13 @@ def convert_ldm_clip_checkpoint_v1(checkpoint):
         if key.startswith("cond_stage_model.transformer"):
             text_model_dict[key[len("cond_stage_model.transformer.") :]] = checkpoint[key]
 
-    # support checkpoint without position_ids (invalid checkpoint)
-    if "text_model.embeddings.position_ids" not in text_model_dict:
-        text_model_dict["text_model.embeddings.position_ids"] = torch.arange(77).unsqueeze(0)  # 77 is the max length of the text
+    # # support checkpoint without position_ids (invalid checkpoint)
+    # if "text_model.embeddings.position_ids" not in text_model_dict:
+    #     text_model_dict["text_model.embeddings.position_ids"] = torch.arange(77).unsqueeze(0)  # 77 is the max length of the text
+
+    # remove position_ids for newer transformer, which causes error :( 
+    if "text_model.embeddings.position_ids" in text_model_dict: 
+        text_model_dict.pop("text_model.embeddings.position_ids")
 
     return text_model_dict
 
@@ -974,7 +978,7 @@ def load_checkpoint_with_text_encoder_conversion(ckpt_path, device="cpu"):
         checkpoint = None
         state_dict = load_file(ckpt_path)  # , device) # may causes error
     else:
-        checkpoint = torch.load(ckpt_path, map_location=device)
+        checkpoint = torch.load(ckpt_path, map_location=device, weights_only=False)
         if "state_dict" in checkpoint:
             state_dict = checkpoint["state_dict"]
         else:
@@ -1275,10 +1279,10 @@ def load_vae(vae_id, dtype):
 
     if vae_id.endswith(".bin"):
         # SD 1.5 VAE on Huggingface
-        converted_vae_checkpoint = torch.load(vae_id, map_location="cpu")
+        converted_vae_checkpoint = torch.load(vae_id, map_location="cpu",weights_only=False)
     else:
         # StableDiffusion
-        vae_model = load_file(vae_id, "cpu") if is_safetensors(vae_id) else torch.load(vae_id, map_location="cpu")
+        vae_model = load_file(vae_id, "cpu") if is_safetensors(vae_id) else torch.load(vae_id, map_location="cpu",weights_only=False)
         vae_sd = vae_model["state_dict"] if "state_dict" in vae_model else vae_model
 
         # vae only or full model
