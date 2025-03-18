@@ -3,25 +3,22 @@
 # Projects for text prompt engineering for SEM Wafer dataset
 
 - Class-balancing loss for Dreambooth (with Lora-Training-in-Comfy)
-- Image to image 
+- Text to image / Image to image
 - IPAdapter
-- 
+- Impainting
+- IPAdapter with impainting
+- ControlNet(Proceeding...)
 
-# Lora-Training-in-Comfy
+# Class-balancing loss for Dreambooth (with Lora-Training-in-Comfy)
 
-DISCLAIMER: This is my first "big" custom node. More specifically, it's the first I publish that has a lot of requirements. Therefore, it could conflict with other custom nodes. If it happens, please let me know so I update it accordingly!
+Based on Lora-Training-in-Comfy(https://github.com/LarryJane491/Lora-Training-in-Comfy/tree/main), I adjust "class-balanced loss"(, to train the long-tailed wafer defect dataset
 
-This custom node lets you train LoRA directly in ComfyUI! By default, it saves directly in your ComfyUI lora folder. That means you just have to refresh after training (...and select the LoRA) to test it!
+Likewise Lora-Training-in-Comfy, the dataset (in 1 folder, containing all class of images, format in (
+- dataset : Parent folder path of Path to long-tailed dataset,  
+- beta_class_balancing : hyper-parameter for class-balancing loss, can be (0.9, 0.99, 0.999, 0.9999) referenced in original paper
+- For head-class by multipling (1/Effective_number) with MSE loss, for tail-class by multiplying Effective number with prior-preserving loss
 
-
-Making LoRA has never been easier!
-
-I'll link my tutorial. Download it from here, then follow the guide:
-
-https://www.reddit.com/r/StableDiffusion/comments/193hqkz/lora_training_directly_in_comfyui/
-
-In short, you have to put it in custom_nodes and install the requirements (from requirements_win.txt if you're on Windows). Pretty standard for custom nodes!
-![LoRATrainingNode](https://github.com/LarryJane491/Lora-Training-in-Comfy/assets/156431112/ff9453a7-498e-4e26-a2b9-003f9667cbb2)
+![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/class_balanced_loss_Lora.jpg)
 
 After installing, you can find it in the LJRE/LORA category or by double-clicking and searching for Training or LoRA.
 Make sure you have a folder containing multiple images with captions.
