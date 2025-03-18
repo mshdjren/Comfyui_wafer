@@ -1,15 +1,11 @@
+# Comfyui_wafer
 
-# UPDATE! (19-01-2024)
-Introducing an Advanced node and Access Tensorboard node!
-Access Tensorboard is a very simple node that launches a URL to see data about the logs created during training. Click the node once (after, during, or even before training!), then copy-paste the URL that it wrote in the command prompt. The logs folder related to Tensorboard is in the same folder as your launcher file.
+# Projects for text prompt engineering for SEM Wafer dataset
 
-The Advanced node is full of many recommended features. Some are still missing, but they are here in the code, you just have to change their values manually! Not everything was tested, I personally don't even know what most of these do. Let me know if a certain feature doesn't work like it should!
-
-This node is now confirmed to work with LCMs, SD2.0 and SD Turbo models. I am not able to test for SDXL though.
-
-
-
-
+- Class-balancing loss for Dreambooth (with Lora-Training-in-Comfy)
+- Image to image 
+- IPAdapter
+- 
 
 # Lora-Training-in-Comfy
 
