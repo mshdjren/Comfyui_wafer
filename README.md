@@ -24,7 +24,7 @@ Likewise Lora-Training-in-Comfy, the dataset (in 1 folder, containing all class 
 # Text to image / Image to image
 
 
-![Text to image](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/class_balanced_loss_Lora.jpg)](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/SDXL_text2image.jpg)
+![Text to image](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/SDXL_text2image.jpg)]
 
 # IPAdapter
 
