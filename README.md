@@ -13,7 +13,7 @@
 
 Based on [Lora-Training-in-Comfy](https://github.com/LarryJane491/Lora-Training-in-Comfy/tree/main), I adjust "class-balanced loss"(, to train the long-tailed wafer defect dataset
 
-Likewise Lora-Training-in-Comfy, the dataset (in 1 folder, containing all class of images, format in (
+Likewise Lora-Training-in-Comfy, the dataset (in 1 folder, containing all class of images, format in "[class_name]_[img0].png"
 - dataset : Parent folder path of Path to long-tailed dataset,  
 - beta_class_balancing : hyper-parameter for class-balancing loss, can be (0.9, 0.99, 0.999, 0.9999) referenced in original paper
 - For head-class by multipling (1/Effective_number) with MSE loss, for tail-class by multiplying Effective number with prior-preserving loss
