@@ -2,14 +2,12 @@
 ## Overview
 This repository contains projects for text prompt engineering and image generation using the SEM Wafer dataset. The focus is on handling class imbalance, domain adaptation, and defect-specific image generation.
 
-- Class-balancing loss for Dreambooth (with Lora-Training-in-Comfy)
-- Text to image / Image to image
-- IPAdapter
-- Impainting
-- IPAdapter with impainting
-- ControlNet(Proceeding...)
+- Class-Balanced Loss for Dreambooth (with LoRA Training in ComfyUI)
+- Text2Image and Image2Image generation
+- IPAdapter and Inpainting
+- ControlNet (Work in Progress)
 
-# Class-balancing loss for Dreambooth (with Lora-Training-in-Comfy)
+## Class-Balanced Loss for Dreambooth
 
 Based on [Lora-Training-in-Comfy](https://github.com/LarryJane491/Lora-Training-in-Comfy/tree/main), I adjust [class-balanced loss](https://arxiv.org/pdf/1901.05555), to train the long-tailed wafer defect dataset
 
@@ -22,7 +20,11 @@ and i applied class balancing loss differently for MSE loss & prior-preserving l
 ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/loss.png), ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/samples.png)
 
 - For head-class by multipling (1/Effective_number) with MSE loss, for tail-class by multiplying Effective number with prior-preserving loss as follows
+- [Domain type][Defect prefix][Image description] for positive prompt created good image
 ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/class_balanced_loss_details.jpg)
+
+- Positive prompts:scanning electron microscope,  defect, ring-shaped, solo, centered, concentric rings, jagged edges, smooth outer boundary, metallic texture, monochrome, greyscale, high-resolution, no humans, close-up, uniform background, fine-grain texture
+- Negative prompts: colorized, blurry, low quality, distorted shapes, extra patterns, uneven textures, unrealistic proportions, overexposed areas, grainy noise, missing defect, missing contrast, artifacts, poor lighting
 
 ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/class_balanced_loss_Lora.jpg)
 
