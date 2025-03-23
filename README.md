@@ -12,12 +12,13 @@ This repository contains projects focused on text prompt engineering and image g
 
 Based on [Lora-Training-in-Comfy](https://github.com/LarryJane491/Lora-Training-in-Comfy/tree/main), I adjust [class-balanced loss](https://arxiv.org/pdf/1901.05555), to train the long-tailed wafer defect dataset.
 
-The dataset is organized in a single folder containing all classes of images, formatted as "[class_name]_[img0].png".
 - Dataset Path: Parent folder path to the long-tailed dataset.
+The dataset is organized in a single folder containing all classes of images, formatted as "[class_name]_[img0].png".
 
 ## Adapting Class-Balanced Loss for Dreambooth
 Class-balanced loss and Effective Number are defined as follows:
 ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/loss.png), ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/samples.png)
+
 n: Number of samples in a class
 β: Hyperparameter for class balancing (e.g., 0.9, 0.99, 0.999, 0.9999).
 
