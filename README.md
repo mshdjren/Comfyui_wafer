@@ -74,7 +74,7 @@ Before applying inpainting with IPAdapter:
 
 - Preferred prompts were sourced from GPT-4.5.
 
-![IPAdapter](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/SDXL_IPAdapter.jpg)
+![IPAdapter](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/SDXL_impainting.jpg)
 
 # IPAdapter with Inpainting
 Combining IPAdapter and inpainting techniques yielded optimal results:
@@ -83,7 +83,7 @@ Combining IPAdapter and inpainting techniques yielded optimal results:
 
 - Generated defect regions using SDXL with IPAdapter-guided prompts.
 
-![IPAdapter](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/SDXL_IPAdapter.jpg)
+![IPAdapter](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/SDXL_IPAdapter_impainting.jpg)
 
 TO GO FURTHER
 # ControlNet (Work in Progress)
