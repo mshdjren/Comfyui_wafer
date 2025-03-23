@@ -43,11 +43,11 @@ For tail classes: Prior-preserving loss is scaled by E(n)
 # Text-to-Image / Image-to-Image
 For text-to-image generation using SDXL:
 
-Three text prompt sources were tested: WDTagger, LLAMA 3.2, and GPT-4.5.
+- Three text prompt sources were tested: WDTagger, LLAMA 3.2, and GPT-4.5.
 
-GPT-4.5 prompts produced the best results for SEM wafer images with ring-type defects.
+- GPT-4.5 prompts produced the best results for SEM wafer images with ring-type defects.
 
-Challenges:
+### Challenges
 SEM wafer images differ significantly from the domain of pre-trained SDXL models, making precise defect generation difficult.
 
 ![Text to image](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/SDXL_text2image.jpg)
@@ -55,29 +55,35 @@ SEM wafer images differ significantly from the domain of pre-trained SDXL models
 # IPAdapter
 To address the domain gap between SEM wafer images and pre-trained SDXL models:
 
-IPAdapter with Input Images: Achieved better results than naive text-to-image generation.
+- IPAdapter with Input Images: Achieved better results than naive text-to-image generation.
+
+### Challenges
 
 Normal Pattern Similarity: Maintaining normal patterns is crucial in anomaly detection since deviations from normal patterns are identified as defects.
 
 ![IPAdapter](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/SDXL_IPAdapter.jpg)
 
-Generate only defect regions while preserving normal patterns using inpainting techniques.
+-> Generate only defect regions while preserving normal patterns using inpainting techniques.
 
 # Impainting
 Before applying inpainting with IPAdapter:
 
-Naive text prompts were used to generate defect regions without IPAdapter.
+- Naive text prompts were used to generate defect regions without IPAdapter.
 
-Similar to text-to-image results, generating precise defect regions solely with text prompts proved challenging.
+- Similar to text-to-image results, generating precise defect regions solely with text prompts proved challenging.
 
-Preferred prompts were sourced from GPT-4.5.
+- Preferred prompts were sourced from GPT-4.5.
+
+![IPAdapter](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/SDXL_IPAdapter.jpg)
 
 # IPAdapter with Inpainting
 Combining IPAdapter and inpainting techniques yielded optimal results:
 
-Preserved normal patterns from input images.
+- Preserved normal patterns from input images.
 
-Generated defect regions using SDXL with IPAdapter-guided prompts.
+- Generated defect regions using SDXL with IPAdapter-guided prompts.
+
+![IPAdapter](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/SDXL_IPAdapter.jpg)
 
 TO GO FURTHER
 # ControlNet (Work in Progress)
