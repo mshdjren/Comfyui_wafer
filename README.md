@@ -17,13 +17,14 @@ The dataset is organized in a single folder containing all classes of images, fo
 
 ## Adapting Class-Balanced Loss for Dreambooth
 Class-balanced loss and Effective Number are defined as follows:
+
 ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/loss.png)
 ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/samples.png)
 
-n: Number of samples in a class
-β: Hyperparameter for class balancing (e.g., 0.9, 0.99, 0.999, 0.9999).
+- n: Number of samples in a class
+- β: Hyperparameter for class balancing (e.g., 0.9, 0.99, 0.999, 0.9999).
 
-Implementation:
+### Implementation:
 For head classes: MSE loss is scaled by 1/E(n).
 For tail classes: Prior-preserving loss is scaled by E(n)
 
