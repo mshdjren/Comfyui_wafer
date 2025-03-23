@@ -1,5 +1,3 @@
-<img width="626" alt="image" src="https://github.com/user-attachments/assets/d26ab42d-c4e7-49a1-80e4-c6c587a2a714" /># Comfyui_wafer
-
 # Projects for text prompt engineering for SEM Wafer dataset
 
 - Class-balancing loss for Dreambooth (with Lora-Training-in-Comfy)
@@ -19,8 +17,7 @@ Likewise Lora-Training-in-Comfy, the dataset (in 1 folder, containing all class 
 ## Adapting class balanced loss for dreambooth, Effective Number 정의
 Class-balanced loss & Effective Number can be defined as follows, (beta_class_balancing : hyper-parameter for class-balancing loss, can be (0.9, 0.99, 0.999, 0.9999) referenced in original paper)
 and i applied class balancing loss differently for MSE loss & prior-preserving loss
-![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/loss.png)
-![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/samples.png)
+![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/loss.png), ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/samples.png)
 
 - For head-class by multipling (1/Effective_number) with MSE loss, for tail-class by multiplying Effective number with prior-preserving loss as follows
 ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/class_balanced_loss_details.jpg)
