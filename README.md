@@ -14,7 +14,7 @@ Based on [Lora-Training-in-Comfy](https://github.com/LarryJane491/Lora-Training-
 
 - Dataset Path: Parent folder path to the long-tailed dataset.
   
-The dataset is organized in a single folder containing all classes of images, formatted as "[class_name]_[img0].png".
+- The dataset is organized in a single folder containing all classes of images, formatted as "[class_name]_[img0].png".
 
 ## Adapting Class-Balanced Loss for Dreambooth
 Class-balanced loss and Effective Number are defined as follows:
@@ -26,9 +26,9 @@ Class-balanced loss and Effective Number are defined as follows:
 - β: Hyperparameter for class balancing (e.g., 0.9, 0.99, 0.999, 0.9999).
 
 ### Implementation
-For head classes: MSE loss is scaled by 1/E(n).
+- For head classes: MSE loss is scaled by 1/E(n).
 
-For tail classes: Prior-preserving loss is scaled by E(n)
+- For tail classes: Prior-preserving loss is scaled by E(n)
 
 ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/class_balanced_loss_details.jpg)
 
@@ -48,7 +48,7 @@ For text-to-image generation using SDXL:
 - GPT-4.5 prompts produced the best results for SEM wafer images with ring-type defects.
 
 ### Challenges
-SEM wafer images differ significantly from the domain of pre-trained SDXL models, making precise defect generation difficult.
+- SEM wafer images differ significantly from the domain of pre-trained SDXL models, making precise defect generation difficult.
 
 ![Text to image](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/SDXL_text2image.jpg)
 
@@ -59,7 +59,7 @@ To address the domain gap between SEM wafer images and pre-trained SDXL models:
 
 ### Challenges
 
-Normal Pattern Similarity: Maintaining normal patterns is crucial in anomaly detection since deviations from normal patterns are identified as defects.
+- Normal Pattern Similarity: Maintaining normal patterns is crucial in anomaly detection since deviations from normal patterns are identified as defects.
 
 ![IPAdapter](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/SDXL_IPAdapter.jpg)
 
