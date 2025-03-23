@@ -1,5 +1,5 @@
 # Defect Text Prompt Engineering Projects for SEM wafer dataset
-##Overview
+## Overview
 This repository contains projects for text prompt engineering and image generation using the SEM Wafer dataset. The focus is on handling class imbalance, domain adaptation, and defect-specific image generation.
 
 - Class-balancing loss for Dreambooth (with Lora-Training-in-Comfy)
