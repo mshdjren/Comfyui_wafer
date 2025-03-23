@@ -13,6 +13,7 @@ This repository contains projects focused on text prompt engineering and image g
 Based on [Lora-Training-in-Comfy](https://github.com/LarryJane491/Lora-Training-in-Comfy/tree/main), I adjust [class-balanced loss](https://arxiv.org/pdf/1901.05555), to train the long-tailed wafer defect dataset.
 
 - Dataset Path: Parent folder path to the long-tailed dataset.
+  
 The dataset is organized in a single folder containing all classes of images, formatted as "[class_name]_[img0].png".
 
 ## Adapting Class-Balanced Loss for Dreambooth
@@ -24,16 +25,17 @@ Class-balanced loss and Effective Number are defined as follows:
 - n: Number of samples in a class
 - β: Hyperparameter for class balancing (e.g., 0.9, 0.99, 0.999, 0.9999).
 
-### Implementation:
+### Implementation
 For head classes: MSE loss is scaled by 1/E(n).
+
 For tail classes: Prior-preserving loss is scaled by E(n)
 
 ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/class_balanced_loss_details.jpg)
 
-Prompt Structure:[Domain type][Defect prefix][Image description]
-Positive Prompts: scanning electron microscope, defect, ring-shaped, solo, centered, concentric rings, jagged edges, smooth outer boundary, metallic texture, monochrome, greyscale, high-resolution, no humans, close-up, uniform background, fine-grain texture.
+**Prompt Structure:[Domain type][Defect prefix][Image description]**
+- Positive Prompts: scanning electron microscope, defect, ring-shaped, solo, centered, concentric rings, jagged edges, smooth outer boundary, metallic texture, monochrome, greyscale, high-resolution, no humans, close-up, uniform background, fine-grain texture.
 
-Negative Prompts: colorized, blurry, low quality, distorted shapes, extra patterns, uneven textures, unrealistic proportions, overexposed areas, grainy noise, missing defect, missing contrast, artifacts, poor lighting.
+- Negative Prompts: colorized, blurry, low quality, distorted shapes, extra patterns, uneven textures, unrealistic proportions, overexposed areas, grainy noise, missing defect, missing contrast, artifacts, poor lighting.
 
 ![Class-balancing LORA](https://github.com/mshdjren/Comfyui_wafer/blob/main/results/class_balanced_loss_Lora.jpg)
 
